@@ -2,6 +2,7 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <algorithm>
+#include <filesystem>
 
 namespace sj = simdjson;
 
@@ -17,7 +18,10 @@ struct ArtistTime{
 
 class History{
     public:
-        void Loader(std::string path);
+        void Load(std::string path);
+        void LoadFound();
+        void LoadFound(int year);
+        void LoadFound(std::vector<int> year);
         void Print();
         void Print(int min);
         void Print(int min_art, int min_song);
@@ -28,6 +32,7 @@ class History{
         void PrintTop();
         void PrintTop(int n);
         void MoveToVector();
+        void FindFiles(const std::string& path);
     private:
         sj::ondemand::parser parser;
         // track uri to ms
@@ -40,6 +45,8 @@ class History{
 
         std::vector<ArtistTime> artists;
         std::vector<SongTime> songs;
+
+        std::vector<std::filesystem::path> json_files;
 
         long long total = 0;
 };
